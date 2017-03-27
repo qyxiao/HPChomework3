@@ -22,26 +22,32 @@ int main( int argc, char *argv[])
   	sscanf(argv[1], "%d", &round_Num);
   }
   
+  int count_round=0;
 
-
-  int message_out;
+  int message_out=0;
   int message_in;
   tag = 99;
-
-  if(rank  == 0)
+  
+  while(count_round<=round_Num){
+    if(rank  == 0)
   {
     destination = rank + 1;
     origin = size - 1;
-    message_out = 0;
-    MPI_Send(&message_out, 1, MPI_INT, destination, tag, MPI_COMM_WORLD);
+    
+      count_round++;
+      message_out = message_in + rank;
+      MPI_Send(&message_out, 1, MPI_INT, destination, tag, MPI_COMM_WORLD);
+      printf("messsage send");
     MPI_Recv(&message_in,  1, MPI_INT, origin,      tag, MPI_COMM_WORLD, &status);
+    
     printf("At round %d the main thread receive message: %d\n", round_Num, message_in);
+    
   }
   else if(rank<size-1)
   {
     destination = rank +1;
     origin = rank -1;
-    
+    count_round++;
     MPI_Recv(&message_in,  1, MPI_INT, origin,      tag, MPI_COMM_WORLD, &status);
     message_out = message_in + rank;
     MPI_Send(&message_out, 1, MPI_INT, destination, tag, MPI_COMM_WORLD);
@@ -49,14 +55,16 @@ int main( int argc, char *argv[])
   }
   else
   {
-  	destination = 0;
+    destination = 0;
     origin = rank -1;
-    
+    count_round++;
     MPI_Recv(&message_in,  1, MPI_INT, origin,      tag, MPI_COMM_WORLD, &status);
     message_out = message_in + rank;
     MPI_Send(&message_out, 1, MPI_INT, destination, tag, MPI_COMM_WORLD);
     printf("thread %d the output message is: %d, message in is:%d\n", rank, message_out,message_in);
   }
+  }
+  
   /*	
   printf("rank %d hosted on %s received from %d the message %d\n", rank, hostname, origin, message_in);
   */
