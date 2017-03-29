@@ -3,7 +3,7 @@ Qiyu Xiao(qx344)
 
 
 
-Parellel experienment below run with 4 threads.
+arellel experienment below run with 4 threads.
 
 | Array Length(N) / Max Iter  | jacobi2D | jacobi2D-omp | gs2D | gs2D-omp | Last Residual |
 | --- | --- | --- | --- | --- | --- | 
