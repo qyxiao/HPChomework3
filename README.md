@@ -4,10 +4,12 @@ Qiyu Xiao(qx344)
 
 Below is time(second) consumed when transfering single int with three hosts crunchy1,crunchy3 and crunchy4 with option -ppn 1 
 
-| Thread Num\ Loop | 10 | 50| 100 | 500|
-| ------------- | ------------- |
-| 10  | 0.060414  | asd | fsd | asdf|
-| Content Cell  | Content Cell  | qwer | asf| fds |
+| Array Length(N) / Max Iter  | jacobi2D | jacobi2D-omp | gs2D | gs2D-omp | Last Residual |
+| --- | --- | --- | --- | --- | --- | 
+| 10/1000 | 0.000895 | 0.001664 | 0.000615 | 0.001497 | <10^(-5) |  
+| 100/1000 | 0.242238 | 0.108601 | 0.283954 | 0.119327 | ~50 |
+| 1000/1000 | 23.942599 | 10.120017 | 28.663496 | 11.057303 | ~1000 |
+| 1000/10000 | 239.077704 | 100.792247 | 286.340558 | 108.474911 | ~800 |
 
 |Thread Num\ Loop | 10 | 50 | 100 | 500 |
 | ----- | ----- | ----- | ----- |
