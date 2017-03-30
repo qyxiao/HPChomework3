@@ -14,6 +14,7 @@ We can notice that time consumed roughly grows linearly with total communication
 
 Below is time(second) consumed when transfering int array[524288](~2Mb) with three hosts crunchy1,crunchy3 and crunchy4 with option -ppn 1 
 |Thread Num\ Loop | 10 | 50 | 100 | 
+| ------------- |  |  | |
 |10 | 2.228239  | 9.455117 | 18.443947  | 
 |50 | 14.703286  | 72.395926 | 143.868863  |   
 |100 | 28.794298 | 147.561126 | 285.631170 | 
