@@ -22,15 +22,6 @@ Below is time(second) consumed when transfering int array[524288](~2Mb) with thr
 | 50 | 14.703286 | 72.395926 | 143.868863 | 
 | 100 | 28.794298 | 147.561126 | 285.631170 | 
 
-
-
-
-|Thread Num\ Loop | 10 | 50 | 100 | 
-| ----- | ----- | ----- | ----- |
-|10 | 2.228239  | 9.455117 | 18.443947  | 
-|50 | 14.703286  | 72.395926 | 143.868863  |   
-|100 | 28.794298 | 147.561126 | 285.631170 | 
-
 Again the time grows linearly with total communications(ThreadNum*Loop). We can estimate the bandwidth using total data trasfered/time = (100*100*2Mb)/285 = 70Mb/second. 
 
 
