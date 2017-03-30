@@ -33,7 +33,7 @@ int main( int argc, char *argv[])
   int* message_out;
   int* message_in;
   tag = 99;
-  int arrSize = 2000;  /* 524288 */
+  int arrSize = 524288 ;  /* 524288 */
   message_out = malloc(sizeof(int)*arrSize);
   message_in = malloc(sizeof(int)*arrSize); 
   
@@ -93,6 +93,13 @@ int main( int argc, char *argv[])
   
   }
   
+  if(rank==0){
+    get_timestamp(&time2);
+    double elapsed = timestamp_diff_in_seconds(time1,time2);
+    printf("Time elapsed is %f seconds.\n", elapsed);
+  }
+
+
   free(message_in);
 
   

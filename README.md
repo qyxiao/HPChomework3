@@ -2,60 +2,23 @@
 Qiyu Xiao(qx344)
 
 
+Below is time(second) consumed when transfering single int with three hosts crunchy1,crunchy3 and crunchy4 with option -ppn 1 
+|Thread Num\ Loop | 10 | 50 | 100 | 500 |
+|10 | 0.060414 | 0.122372 | 0.381758 | 1.623798 |
+|50| 0.225866 | 0.720819 | 1.579400 | 7.707926 |
+|100 | 0.619412 | 2.056454 | 4.555320 | 20.955724 |
+|500 | 1.784055 | 6.171972 | 11.220639  | 50.669340 |
 
-Parellel experienment below run with 4 threads.
-
-| Array Length(N) / Max Iter  | jacobi2D | jacobi2D-omp | gs2D | gs2D-omp | Last Residual |
-| --- | --- | --- | --- | --- | --- | 
-| 10/1000 | 0.000895 | 0.001664 | 0.000615 | 0.001497 | <10^(-5) |  
-| 100/1000 | 0.242238 | 0.108601 | 0.283954 | 0.119327 | ~50 |
-| 1000/1000 | 23.942599 | 10.120017 | 28.663496 | 11.057303 | ~1000 |
-| 1000/10000 | 239.077704 | 100.792247 | 286.340558 | 108.474911 | ~800 |
-
-
-Architecture:          x86_64
-
-CPU op-mode(s):        32-bit, 64-bit
-
-Byte Order:            Little Endian
-
-CPU(s):                4
-
-On-line CPU(s) list:   0-3
-
-Thread(s) per core:    1
-
-Core(s) per socket:    2
-
-Socket(s):             2
-
-NUMA node(s):          2
-
-Vendor ID:             AuthenticAMD
-
-CPU family:            15
-
-Model:                 33
-
-Model name:            Dual Core AMD Opteron(tm) Processor 285
-
-Stepping:              2
-
-CPU MHz:               2592.646
-
-BogoMIPS:              5184.29
-
-L1d cache:             64K
-
-L1i cache:             64K
-
-L2 cache:              1024K
-
-NUMA node0 CPU(s):     0,1
-
-NUMA node1 CPU(s):     2,3
+We can notice that time consumed roughly grows linearly with total communications(ThreadNum*Loop). And Thus we can estimate that the time needed for one communication is about 0.0005 second.
 
 
+Below is time(second) consumed when transfering int array[524288](~2Mb) with three hosts crunchy1,crunchy3 and crunchy4 with option -ppn 1 
+|Thread Num\ Loop | 10 | 50 | 100 | 
+|10 | 2.228239  | 9.455117 | 18.443947  | 
+|50 | 14.703286  | 72.395926 | 143.868863  |   
+|100 | 28.794298 | 147.561126 | 285.631170 | 
+
+Again the time grows linearly with total communications(ThreadNum*Loop). We can estimate the bandwidth using total data trasfered/time = (100*100*2Mb)/285 = 70Mb/second. 
 
 
 
