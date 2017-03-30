@@ -33,7 +33,7 @@ int main( int argc, char *argv[])
   int* message_out;
   int* message_in;
   tag = 99;
-  int arrSize = 20;  /* 524288 */
+  int arrSize = 2000;  /* 524288 */
   message_out = malloc(sizeof(int)*arrSize);
   message_in = malloc(sizeof(int)*arrSize); 
   
@@ -53,11 +53,12 @@ int main( int argc, char *argv[])
       }
         MPI_Send(message_out, arrSize, MPI_INT, destination, tag, MPI_COMM_WORLD);
         MPI_Recv(message_in,  arrSize, MPI_INT, origin,      tag, MPI_COMM_WORLD, &status);
-        printf("At round %d the main thread receive message: %d\n", count_round, message_in[0]);
+        count_round++;
+        printf("At round %d array is received\n", count_round);
         /*message_in[0]=2;*/
-        MPI_Send(message_in, arrSize, MPI_INT, destination, tag, MPI_COMM_WORLD);
+        
       
-      count_round++;
+      
       if(count_round>=round_Num){
         FILE* fd = NULL;
         char filename[256];
@@ -68,6 +69,7 @@ int main( int argc, char *argv[])
           fprintf(fd, "  %d\n", message_in[n]);
 
         fclose(fd);
+        printf("Array received at the end is stored in output%02d.txt\n", count_round);
       }   
   }
   else if(rank==size-1)
@@ -77,7 +79,7 @@ int main( int argc, char *argv[])
     count_round++;
     MPI_Recv(message_in,  arrSize, MPI_INT, origin, tag, MPI_COMM_WORLD, &status);
     MPI_Send(message_in, arrSize, MPI_INT, destination, tag, MPI_COMM_WORLD);
-    printf("thread %d the output message is: %d\n", rank,message_in[1]);
+    
   }
   else
   {
@@ -86,19 +88,14 @@ int main( int argc, char *argv[])
     count_round++;
     MPI_Recv(message_in, arrSize, MPI_INT, origin,      tag, MPI_COMM_WORLD, &status);
     MPI_Send(message_in, arrSize, MPI_INT, destination, tag, MPI_COMM_WORLD);
-    printf("thread %d the output message is: %d\n", rank, message_in[2]);
+    
   }
   
   }
   
-  /*	
-  printf("rank %d hosted on %s received from %d the message %d\n", rank, hostname, origin, message_in);
-  */
-  if(rank==0){
-    get_timestamp(&time2);
-    double elapsed = timestamp_diff_in_seconds(time1,time2);
-    printf("Time elapsed is %f seconds.\n", elapsed);
-  }
+  free(message_in);
+
+  
 
   MPI_Finalize();
   

@@ -43,10 +43,10 @@ int main( int argc, char *argv[])
       count_round++;
       message_out = message_in + rank;
       MPI_Send(&message_out, 1, MPI_INT, destination, tag, MPI_COMM_WORLD);
-      printf("messsage send");
+      
       MPI_Recv(&message_in,  1, MPI_INT, origin,      tag, MPI_COMM_WORLD, &status);
     
-    printf("At round %d the main thread receive message: %d\n", round_Num, message_in);
+    printf("At round %d the main thread receive message: %d\n", count_round, message_in);
     
   }
   else if(rank==size-1)
@@ -57,7 +57,7 @@ int main( int argc, char *argv[])
     MPI_Recv(&message_in,  1, MPI_INT, origin,      tag, MPI_COMM_WORLD, &status);
     message_out = message_in + rank;
     MPI_Send(&message_out, 1, MPI_INT, destination, tag, MPI_COMM_WORLD);
-    printf("thread %d the output message is: %d, message in is:%d\n", rank, message_out,message_in);
+    /*printf("thread %d the output message is: %d, message in is:%d\n", rank, message_out,message_in);*/
   }
   else
   {
@@ -67,14 +67,12 @@ int main( int argc, char *argv[])
     MPI_Recv(&message_in,  1, MPI_INT, origin,      tag, MPI_COMM_WORLD, &status);
     message_out = message_in + rank;
     MPI_Send(&message_out, 1, MPI_INT, destination, tag, MPI_COMM_WORLD);
-    printf("thread %d the output message is: %d, message in is:%d\n", rank, message_out,message_in);
+    /*printf("thread %d the output message is: %d, message in is:%d\n", rank, message_out,message_in);*/
   }
   
   }
   
-  /*	
-  printf("rank %d hosted on %s received from %d the message %d\n", rank, hostname, origin, message_in);
-  */
+  
   if(rank==0){
     get_timestamp(&time2);
     double elapsed = timestamp_diff_in_seconds(time1,time2);
